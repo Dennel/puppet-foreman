@@ -66,14 +66,20 @@ class foreman::puppetmaster (
       owner                   => 'puppet',
       group                   => 'puppet',
       selinux_ignore_defaults => true,
-      require                 => Class['::puppet::server::install'],
+      #require                 => Class['::puppet::server::install'],
     }
 
     file { "${puppet_home}/yaml/foreman":
       ensure  => directory,
       owner   => 'puppet',
       group   => 'puppet',
-      require => Class['::puppet::server::install'],
+      #require => Class['::puppet::server::install'],
+    }
+    file {'/etc/puppet/puppet.conf':
+      source  => "puppet:///modules/${module_name}/puppet.conf",
+      mode    => '0640',
+      owner   => 'root',
+      group   => 'puppet',
     }
   }
 }
